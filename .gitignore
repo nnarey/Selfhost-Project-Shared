@@ -1,0 +1,26 @@
+# Locally downloaded Node.js runtime (see start.sh) — not part of the project.
+.tools/
+.cursor/
+
+/node_modules
+web/node_modules/
+web/dist/
+*.local
+*.local.spl
+.DS_Store
+
+# Local exports / PII — do not push to GitHub
+*.csv
+!data/splunk-activity.csv
+# Dated archive of each daily export. The rolling file above is overwritten every morning, so
+# these are the only copies a server that missed a boot can replay from — they must be tracked.
+!data/snapshots/*.csv
+!server/fixtures/*.csv
+server/data/
+web/public/splunk-results.csv
+web/public/splunk-results.json
+*_transcript.txt
+.env.local
+.env
+# Not part of the runtime-metrics work; kept local.
+scripts/mbr_metrics.py

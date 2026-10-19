@@ -1,0 +1,44 @@
+{
+  "name": "fieldcam-selfhost-server",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "PATH=\"/opt/homebrew/opt/node@22/bin:/opt/homebrew/bin:$PATH\" tsx watch src/index.ts",
+    "start": "PATH=\"/opt/homebrew/opt/node@22/bin:/opt/homebrew/bin:$PATH\" tsx src/index.ts",
+    "seed": "PATH=\"/opt/homebrew/opt/node@22/bin:/opt/homebrew/bin:$PATH\" tsx src/scripts/seed.ts",
+    "smoke": "PATH=\"/opt/homebrew/opt/node@22/bin:/opt/homebrew/bin:$PATH\" tsx src/scripts/smoke.ts",
+    "import:fixtures": "PATH=\"/opt/homebrew/opt/node@22/bin:/opt/homebrew/bin:$PATH\" tsx src/scripts/importFixtures.ts",
+    "import:fixture": "npm run import:fixtures",
+    "test": "npm run test:unit && npm run test:jira && npm run test:features && npm run test:import && npm run test:snapshot && npm run test:stats && npm run test:power && npm run test:replay",
+    "test:jira": "PATH=\"/opt/homebrew/opt/node@22/bin:/opt/homebrew/bin:$PATH\" FLEET_ENABLED=false FLEET_MODE=off tsx --test src/jiraTriage.test.ts",
+    "reports:gather": "tsx src/scripts/gatherReports.ts",
+    "jira:export": "PATH=\"/opt/homebrew/opt/node@22/bin:/opt/homebrew/bin:$PATH\" tsx src/scripts/exportJiraTriage.ts",
+    "test:unit": "PATH=\"/opt/homebrew/opt/node@22/bin:/opt/homebrew/bin:$PATH\" tsx --test src/splunkSearch.test.ts src/reportsIntake.test.ts src/gatherReports.test.ts",
+    "test:features": "PATH=\"/opt/homebrew/opt/node@22/bin:/opt/homebrew/bin:$PATH\" DATABASE_PATH=\"$(mktemp -d)/t.sqlite\" FLEET_ENABLED=false FLEET_MODE=off tsx src/scripts/tests/features.test.ts",
+    "test:import": "PATH=\"/opt/homebrew/opt/node@22/bin:/opt/homebrew/bin:$PATH\" DATABASE_PATH=\"$(mktemp -d)/t.sqlite\" FLEET_ENABLED=false FLEET_MODE=off tsx src/scripts/tests/importE2E.test.ts",
+    "test:snapshot": "PATH=\"/opt/homebrew/opt/node@22/bin:/opt/homebrew/bin:$PATH\" DATABASE_PATH=\"$(mktemp -d)/t.sqlite\" FLEET_ENABLED=false FLEET_MODE=off tsx src/scripts/tests/snapshot.test.ts",
+    "test:stats": "PATH=\"/opt/homebrew/opt/node@22/bin:/opt/homebrew/bin:$PATH\" DATABASE_PATH=\"$(mktemp -d)/t.sqlite\" FLEET_ENABLED=false FLEET_MODE=off tsx src/scripts/tests/statsWindows.test.ts",
+    "validate:snapshot": "PATH=\"/opt/homebrew/opt/node@22/bin:/opt/homebrew/bin:$PATH\" COMPETITION_START=2026-08-24 DATABASE_PATH=\"$(mktemp -d)/t.sqlite\" FLEET_ENABLED=false FLEET_MODE=off tsx src/scripts/validateSplunkSnapshot.ts",
+    "test:power": "PATH=\"/opt/homebrew/opt/node@22/bin:/opt/homebrew/bin:$PATH\" DATABASE_PATH=\"$(mktemp -d)/t.sqlite\" FLEET_ENABLED=false FLEET_MODE=off tsx src/scripts/tests/powerE2E.test.ts",
+    "test:replay": "PATH=\"/opt/homebrew/opt/node@22/bin:/opt/homebrew/bin:$PATH\" DATABASE_PATH=\"$(mktemp -d)/t.sqlite\" FLEET_ENABLED=false FLEET_MODE=off tsx src/scripts/tests/snapshotReplay.test.ts",
+    "import:csv": "PATH=\"/opt/homebrew/opt/node@22/bin:/opt/homebrew/bin:$PATH\" tsx src/scripts/importCsv.ts"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.10.0",
+    "cors": "^2.8.5",
+    "csv-parse": "^5.6.0",
+    "express": "^5.1.0",
+    "multer": "^2.0.1",
+    "tsx": "^4.19.4",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/cors": "^2.8.18",
+    "@types/express": "^5.0.2",
+    "@types/multer": "^1.4.12",
+    "@types/node": "^22.15.21",
+    "typescript": "^5.8.3"
+  }
+}

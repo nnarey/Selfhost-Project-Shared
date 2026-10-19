@@ -1,0 +1,9 @@
+{
+  "source": "fixture",
+  "baseUrl": "https://splunk.example",
+  "spl": "web/splunk-search.spl",
+  "rowsFile": "data/splunk-activity.csv",
+  "exportedAt": "2026-10-18T21:50:00.000Z",
+  "latestTime": "2026-10-18T21:50:00.000Z",
+  "windowHours": 1200
+}

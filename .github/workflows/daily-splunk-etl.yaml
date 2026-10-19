@@ -1,0 +1,45 @@
+name: Daily Splunk ETL
+
+on:
+  # Manual in this sample. A live deployment can restore a daily schedule.
+  workflow_dispatch:
+
+concurrency:
+  group: daily-splunk-etl
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  pull:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Write mock Splunk snapshot
+        run: python3 scripts/etl_splunk_activity.py
+
+      - name: Commit snapshot
+        env:
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/
+          if git diff --cached --quiet; then
+            echo "No snapshot changes to commit"
+            exit 0
+          fi
+          day=$(date -u +%Y-%m-%d)
+          git commit -m "chore(data): Splunk snapshot ${day}"
+          git pull --rebase origin "$BRANCH"
+          git push origin "HEAD:$BRANCH"

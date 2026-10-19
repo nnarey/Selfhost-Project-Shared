@@ -1,0 +1,11 @@
+assignment_id,camera_id,email,assigned_at_utc,unassigned_at_utc,source,status
+asg-alice-1,FC-1001,alice@northline.example,2026-10-12T09:00:00.000Z,,fleet,open
+asg-bob-1,FC-1002,bob@northline.example,2026-10-12T10:00:00.000Z,,fleet,open
+asg-cara-1,FC-1003,cara@northline.example,2026-10-12T11:00:00.000Z,2026-10-14T09:00:00.000Z,fleet,closed
+asg-cara-2,FC-1003,devon@northline.example,2026-10-14T09:00:00.000Z,,fleet,open
+asg-elena-1,FC-1004,elena@northline.example,2026-10-12T12:00:00.000Z,,fleet,open
+asg-frank-1,FC-1005,frank@northline.example,2026-10-12T13:00:00.000Z,,fleet,open
+asg-grace-1,FC-1006,grace@northline.example,2026-10-12T15:00:00.000Z,2026-10-13T23:00:00.000Z,fleet,closed
+asg-hank-1,FC-1007,hank@northline.example,2026-10-12T17:00:00.000Z,,fleet,open
+,FC-1008,,,,fleet,available
+,FC-1099,,,,fleet,available

@@ -1,0 +1,15 @@
+**/.git
+**/.DS_Store
+**/.env
+**/.env.local
+**/*.local
+**/*.local.spl
+**/node_modules
+**/dist
+**/*.sqlite
+**/*.sqlite-*
+**/.tools
+**/canvases
+web/public/splunk-results.csv
+web/public/splunk-results.json
+agent-transcripts

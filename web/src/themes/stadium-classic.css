@@ -1,0 +1,213 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #0a0f1d;
+  --color-bg-elevated: #0f1729;
+  --color-surface: #131d33;
+  --color-surface-2: #1a2740;
+  --color-border: #263654;
+  --color-border-soft: #1c2a44;
+  --color-text: #eef1f8;
+  --color-text-muted: #93a1c2;
+  --color-text-faint: #5c6a8a;
+  --color-accent: #f2b705;
+  --color-accent-soft: #f2b70522;
+  --color-pitch: #12b76a;
+  --color-danger: #f04438;
+  --color-danger-soft: #f0443822;
+  --color-info: #3b82f6;
+
+  --font-sans: "DM Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Bebas Neue", "Arial Narrow", Impact, sans-serif;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-bg);
+  /* Night stadium floodlights: gold + pitch green */
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(242, 183, 5, 0.14), transparent 55%),
+    radial-gradient(circle at 12% 20%, rgba(18, 183, 106, 0.1), transparent 42%),
+    radial-gradient(circle at 88% 8%, rgba(242, 183, 5, 0.08), transparent 38%),
+    radial-gradient(circle at 70% 90%, rgba(18, 183, 106, 0.06), transparent 45%);
+  background-attachment: fixed;
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: #0a0f1d;
+}
+
+.pitch-lines {
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.028) 0px,
+    rgba(255, 255, 255, 0.028) 1px,
+    transparent 1px,
+    transparent 72px
+  );
+}
+
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: 0.04em;
+}
+
+/* Landing hero stadium wash */
+.stadium-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: 1.25rem;
+  border: 1px solid var(--color-border-soft);
+  background:
+    radial-gradient(ellipse 90% 70% at 50% 120%, rgba(18, 183, 106, 0.18), transparent 55%),
+    radial-gradient(ellipse 60% 50% at 20% 0%, rgba(242, 183, 5, 0.16), transparent 50%),
+    radial-gradient(ellipse 50% 40% at 90% 10%, rgba(242, 183, 5, 0.1), transparent 45%),
+    linear-gradient(180deg, #0f1729 0%, #0a0f1d 100%);
+}
+
+.stadium-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.04) 0px,
+    rgba(255, 255, 255, 0.04) 1px,
+    transparent 1px,
+    transparent 56px
+  );
+  opacity: 0.45;
+  mask-image: linear-gradient(180deg, transparent, black 20%, black 75%, transparent);
+}
+
+.stadium-hero::after {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 0%, rgba(242, 183, 5, 0.12), transparent 40%);
+  animation: floodlight-pulse 7s ease-in-out infinite;
+}
+
+.stadium-hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes floodlight-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+}
+
+@keyframes pennant-sway {
+  0%,
+  100% {
+    transform: rotate(-2.5deg) translateY(0);
+  }
+  50% {
+    transform: rotate(2.5deg) translateY(2px);
+  }
+}
+
+.pennant {
+  transform-origin: top center;
+  animation: pennant-sway 5.5s ease-in-out infinite;
+}
+
+.pennant:nth-child(2n) {
+  animation-delay: -1.2s;
+  animation-duration: 6.2s;
+}
+
+.pennant:nth-child(3n) {
+  animation-delay: -2.4s;
+  animation-duration: 4.8s;
+}
+
+.crest-lift {
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.crest-lift:hover {
+  transform: translateY(-3px) scale(1.04);
+  filter: brightness(1.08);
+}
+
+.tournament-eyebrow {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.match-row-accent {
+  border-left: 3px solid transparent;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.match-row-accent:hover {
+  border-left-color: var(--color-accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stadium-hero::after,
+  .pennant {
+    animation: none !important;
+  }
+  .crest-lift:hover {
+    transform: none;
+  }
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 999px;
+}
+
+@layer components {
+  .input {
+    width: 100%;
+    border-radius: 0.5rem;
+    border: 1px solid var(--color-border);
+    background-color: var(--color-surface-2);
+    padding: 0.55rem 0.75rem;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    outline: none;
+    transition: border-color 0.15s ease;
+  }
+  .input:focus {
+    border-color: var(--color-accent);
+  }
+  .input::placeholder {
+    color: var(--color-text-faint);
+  }
+}

@@ -1,0 +1,33 @@
+# FieldCam self-host — sample Splunk search.
+# A live deployment runs this against index=fieldcam_demo and writes data/splunk-activity.csv.
+# The importer scores these Event Type values:
+# recording, upload, livestream, pov_state, locationtime, availability, battery, power, mobile.
+
+index=fieldcam_demo sourcetype=fieldcam_log agency="demo"
+(
+    Event="RecordingStarted"
+    OR Event="RecordingStopped"
+    OR Event="UploadTelemetry"
+    OR Event="LivestreamStarted"
+    OR Event="LivestreamStopped"
+    OR Event="PowerStateChanged"
+    OR Event="GpsLocation"
+    OR Event="PhoneBonded"
+)
+| eval EventType=case(
+    Event="RecordingStarted" OR Event="RecordingStopped", "recording",
+    Event="UploadTelemetry", "upload",
+    Event="LivestreamStarted" OR Event="LivestreamStopped", "livestream",
+    Event="PowerStateChanged", "pov_state",
+    Event="GpsLocation", "locationtime",
+    Event="PhoneBonded", "mobile"
+)
+| eval Status=case(
+    Event="RecordingStarted", "started",
+    Event="LivestreamStarted", "started",
+    Event="RecordingStopped", "success",
+    Event="LivestreamStopped", "success",
+    Event="UploadTelemetry", "success",
+    Event="PhoneBonded", "success"
+)
+| table "Event Time", "Camera ID", "Event Type", Event, "Stable Event ID", "Duration (seconds)", Purpose, Status, "POV Recording"
